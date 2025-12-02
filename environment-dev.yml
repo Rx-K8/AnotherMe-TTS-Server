@@ -1,0 +1,13 @@
+name: anotherme_tts_dev
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - ruff
+  - mypy
+  - pre-commit
+
+  - pip
+  - pip:
+      - -r requirements.txt
