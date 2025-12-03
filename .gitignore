@@ -342,3 +342,5 @@ tags
 
 datasets
 pretrained_models/
+outputs/
+assets/
