@@ -40,7 +40,7 @@ class CosyVoiceTTSProvider(TTSProvider):
 
         if audio_chunks:
             audio = torch.cat(audio_chunks, dim=1)
-            pcm_data = (audio * 32767).to(torch.int16).numpy().tobytes()
+            pcm_data: bytes = (audio * 32767).to(torch.int16).numpy().tobytes()
             return pcm_data
 
         return b""
@@ -57,4 +57,5 @@ class CosyVoiceTTSProvider(TTSProvider):
         return converter.convert(pcm_data, self.SAMPLE_RATE)
 
     async def synthesize_stream(self, params: SynthesisParams) -> AsyncIterator[bytes]:
-        pass
+        raise NotImplementedError("Streaming synthesis is not yet implemented")
+        yield b""  # Make this an async generator  # pragma: no cover

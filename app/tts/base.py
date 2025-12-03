@@ -15,6 +15,6 @@ class TTSProvider(ABC):
         pass
 
     @abstractmethod
-    async def synthesize_stream(self, params: SynthesisParams) -> AsyncIterator[bytes]:
+    def synthesize_stream(self, params: SynthesisParams) -> AsyncIterator[bytes]:
         """指定されたテキスト、速度で音声をストリーミング合成する"""
-        pass
+        ...
