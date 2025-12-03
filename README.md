@@ -13,7 +13,7 @@ git submodule update --init
 conda env create -f environment.yml
 
 # 開発環境
-conda env create -f environment_dev.yml
+conda env create -f environment-dev.yml
 ```
 
 ### Linuxでの追加設定

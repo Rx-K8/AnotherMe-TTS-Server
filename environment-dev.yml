@@ -7,7 +7,3 @@ dependencies:
   - ruff
   - mypy
   - pre-commit
-
-  - pip
-  - pip:
-      - -r requirements.txt
