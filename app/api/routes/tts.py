@@ -85,7 +85,6 @@ async def synthesize_text_raw(
         params = _convert_request(request)
         audio_data = await tts_service.synthesize(params)
 
-        # フォーマットに応じたContent-Typeを設定
         content_type_map = {
             "wav": "audio/wav",
             "mp3": "audio/mpeg",

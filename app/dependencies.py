@@ -36,7 +36,7 @@ class TTSDependencies:
     def set_tts_provider(cls, provider: TTSProvider) -> None:
         """TTSProviderを設定（テスト用）"""
         cls._tts_provider = provider
-        cls._tts_service = None  # サービスもリセット
+        cls._tts_service = None
 
     @classmethod
     def reset(cls) -> None:
