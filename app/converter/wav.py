@@ -23,16 +23,12 @@ class WAVConverter(AudioFormatConverter):
         Returns:
             WAVフォーマットの音声データ
         """
-        # PCMバイトデータをnumpy配列に変換
         audio_np = np.frombuffer(pcm_data, dtype=np.int16)
 
-        # float32に正規化 (-1.0 ~ 1.0)
         audio_np = audio_np.astype(np.float32) / 32768.0
 
-        # torch tensorに変換 (channels, samples)
         audio_tensor = torch.from_numpy(audio_np).reshape(channels, -1)
 
-        # WAV形式で保存
         wav_buffer = io.BytesIO()
         torchaudio.save(
             wav_buffer,

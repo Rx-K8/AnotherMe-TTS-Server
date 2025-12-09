@@ -48,7 +48,6 @@ class AudioConverterFactory:
                 f"Supported formats: {list(cls._converters.keys())}"
             )
 
-        # MP3Converterの場合のみbitrateを渡す
         if format_type.lower() == "mp3" and "bitrate" in kwargs:
             return converter_class(bitrate=kwargs["bitrate"])
 
