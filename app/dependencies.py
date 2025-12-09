@@ -4,6 +4,10 @@ from app.service import TTSService
 from app.tts.base import TTSProvider
 from app.tts.cosyvoice import CosyVoiceTTSProvider
 
+# プロンプト設定
+PROMPT_VOICE_PATH = "asset/ondokusan.mp3"
+PROMPT_TEXT = "ここに読み上げたいテキストを貼り付けて下さい。"
+
 
 class TTSDependencies:
     """
@@ -20,8 +24,8 @@ class TTSDependencies:
         """TTSProviderのシングルトンインスタンスを取得"""
         if cls._tts_provider is None:
             cls._tts_provider = CosyVoiceTTSProvider(
-                prompt_voice_path="asset/ondokusan.mp3",
-                prompt_text="ここに読み上げたいテキストを貼り付けて下さい。",
+                prompt_voice_path=PROMPT_VOICE_PATH,
+                prompt_text=PROMPT_TEXT,
             )
         return cls._tts_provider
 
@@ -33,14 +37,16 @@ class TTSDependencies:
         return cls._tts_service
 
     @classmethod
-    def set_tts_provider(cls, provider: TTSProvider) -> None:
-        """TTSProviderを設定（テスト用）"""
-        cls._tts_provider = provider
-        cls._tts_service = None
+    def initialize(cls) -> None:
+        """依存性を初期化"""
+        cls._tts_provider = CosyVoiceTTSProvider(
+            prompt_voice_path=PROMPT_VOICE_PATH,
+            prompt_text=PROMPT_TEXT,
+        )
 
     @classmethod
     def reset(cls) -> None:
-        """依存性をリセット（テスト用）"""
+        """依存性をリセット"""
         cls._tts_provider = None
         cls._tts_service = None
 
