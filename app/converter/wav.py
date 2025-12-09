@@ -25,9 +25,9 @@ class WAVConverter(AudioFormatConverter):
         """
         audio_np = np.frombuffer(pcm_data, dtype=np.int16)
 
-        audio_np = audio_np.astype(np.float32) / 32768.0
+        audio_float = audio_np.astype(np.float32) / 32768.0
 
-        audio_tensor = torch.from_numpy(audio_np).reshape(channels, -1)
+        audio_tensor = torch.from_numpy(audio_float).reshape(channels, -1)
 
         wav_buffer = io.BytesIO()
         torchaudio.save(

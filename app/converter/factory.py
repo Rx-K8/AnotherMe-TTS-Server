@@ -22,13 +22,15 @@ class AudioConverterFactory:
     }
 
     @classmethod
-    def get_converter(cls, format_type: str, **kwargs) -> AudioFormatConverter:
+    def get_converter(
+        cls, format_type: str, bitrate: str | None = None
+    ) -> AudioFormatConverter:
         """指定されたフォーマットのコンバーターを取得
 
         Args:
             format_type: フォーマットタイプ ("pcm", "wav", "mp3")
-            **kwargs: コンバーター固有のオプション
-                - bitrate (MP3のみ): ビットレート (例: "128k", "192k", "320k")
+            bitrate: MP3のビットレート (例: "128k", "192k", "320k")
+                    MP3以外のフォーマットでは無視されます
 
         Returns:
             AudioFormatConverter: 指定されたフォーマットのコンバーター
@@ -48,8 +50,9 @@ class AudioConverterFactory:
                 f"Supported formats: {list(cls._converters.keys())}"
             )
 
-        if format_type.lower() == "mp3" and "bitrate" in kwargs:
-            return converter_class(bitrate=kwargs["bitrate"])
+        # MP3の場合はbitrateを渡す
+        if format_type.lower() == "mp3" and bitrate is not None:
+            return MP3Converter(bitrate=bitrate)
 
         return converter_class()
 
