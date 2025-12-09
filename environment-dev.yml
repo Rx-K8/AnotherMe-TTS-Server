@@ -4,6 +4,9 @@ channels:
   - defaults
 dependencies:
   - python=3.10
-  - ruff
+  - ruff=0.14.8
   - mypy=1.19.0
   - pre-commit
+  - pip
+  - pip:
+      - -r requirements.txt
