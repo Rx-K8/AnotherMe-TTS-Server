@@ -26,6 +26,7 @@ apt install sox libsox-dev
 ## 音声モデルのダウンロード
 
 ```bash
+# git lfsが必要です。
 mkdir -p pretrained_models
 git clone https://www.modelscope.cn/iic/CosyVoice2-0.5B.git pretrained_models/CosyVoice2-0.5B
 ```
