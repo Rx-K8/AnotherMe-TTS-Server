@@ -8,13 +8,14 @@ import torch
 from cosyvoice.cli.cosyvoice import CosyVoice2
 from cosyvoice.utils.file_utils import load_wav
 
+from app.converter import AudioConverterFactory
 from app.schema import SynthesisParams
-from app.tts.audio_converter import AudioConverterFactory
 from app.tts.base import TTSProvider
 
 
 class CosyVoiceTTSProvider(TTSProvider):
-    SAMPLE_RATE = 22050  # CosyVoice2のデフォルトサンプルレート
+    # CosyVoice2のデフォルトサンプルレート
+    SAMPLE_RATE = 22050
 
     def __init__(self, prompt_voice_path: str, prompt_text: str) -> None:
         self.cosyvoice = CosyVoice2(
@@ -46,13 +47,11 @@ class CosyVoiceTTSProvider(TTSProvider):
         return b""
 
     async def synthesize(self, params: SynthesisParams) -> bytes:
-        # まずPCMデータを生成
         pcm_data = self._generate_pcm(params)
 
         if not pcm_data:
             return b""
 
-        # 指定されたフォーマットに変換
         converter = AudioConverterFactory.get_converter(params.format)
         return converter.convert(pcm_data, self.SAMPLE_RATE)
 

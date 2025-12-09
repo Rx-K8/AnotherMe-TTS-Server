@@ -4,6 +4,8 @@ import io
 import wave
 from abc import ABC, abstractmethod
 
+from pydub import AudioSegment
+
 
 class AudioFormatConverter(ABC):
     """音声フォーマット変換の抽象基底クラス (OCP対応)"""
@@ -38,12 +40,50 @@ class WAVConverter(AudioFormatConverter):
         return buffer.getvalue()
 
 
+class MP3Converter(AudioFormatConverter):
+    """MP3フォーマットへの変換"""
+
+    def __init__(self, bitrate: str = "128k"):
+        """
+        Args:
+            bitrate: MP3のビットレート (例: "128k", "192k", "320k")
+        """
+        self.bitrate = bitrate
+
+    def convert(self, pcm_data: bytes, sample_rate: int, channels: int = 1) -> bytes:
+        """PCMデータをMP3フォーマットに変換"""
+        sample_width = 2  # 16-bit
+
+        # まずWAVに変換
+        wav_buffer = io.BytesIO()
+        with wave.open(wav_buffer, "wb") as wav_file:
+            wav_file.setnchannels(channels)
+            wav_file.setsampwidth(sample_width)
+            wav_file.setframerate(sample_rate)
+            wav_file.writeframes(pcm_data)
+
+        wav_buffer.seek(0)
+
+        # WAVからMP3に変換
+        audio = AudioSegment.from_wav(wav_buffer)
+        mp3_buffer = io.BytesIO()
+        audio.export(
+            mp3_buffer,
+            format="mp3",
+            bitrate=self.bitrate,
+            parameters=["-q:a", "2"],  # 高品質設定
+        )
+
+        return mp3_buffer.getvalue()
+
+
 class AudioConverterFactory:
     """音声コンバーターのファクトリークラス"""
 
     _converters: dict[str, type[AudioFormatConverter]] = {
         "pcm": PCMConverter,
         "wav": WAVConverter,
+        "mp3": MP3Converter,
     }
 
     @classmethod

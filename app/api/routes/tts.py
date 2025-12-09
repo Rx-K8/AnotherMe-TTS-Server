@@ -36,9 +36,9 @@ async def synthesize_text(
     """
     テキストを音声に合成するエンドポイント
 
-    - **input**: 音声合成するテキスト
-    - **response_format**: 出力フォーマット (wav, mp3, pcm)
-    - **speed**: 再生速度 (デフォルト: 1.0)
+    - input: 音声合成するテキスト
+    - response_format: 出力フォーマット (wav, mp3, pcm)
+    - speed: 再生速度 (デフォルト: 1.0)
     """
     try:
         params = _convert_request(request)
