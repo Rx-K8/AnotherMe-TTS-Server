@@ -20,8 +20,8 @@ class TTSDependencies:
         """TTSProviderのシングルトンインスタンスを取得"""
         if cls._tts_provider is None:
             cls._tts_provider = CosyVoiceTTSProvider(
-                prompt_voice_path="asset/yomiagesan.mp3",
-                prompt_text="こんにちは、私の声を使って音声を合成してください。",
+                prompt_voice_path="asset/ondokusan.mp3",
+                prompt_text="ここに読み上げたいテキストを貼り付けて下さい。",
             )
         return cls._tts_provider
 
