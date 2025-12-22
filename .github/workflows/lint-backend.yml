@@ -23,17 +23,8 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - name: Free Disk Space
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          df -h
       - name: Checkout
         uses: actions/checkout@v5
-        with:
-          submodules: false
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
