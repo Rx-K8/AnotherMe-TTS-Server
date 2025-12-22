@@ -43,11 +43,14 @@ bash Miniconda3-latest-Linux-x86_64.sh
 ### 3. Python環境のセットアップ
 
 ```bash
-# 開発用環境の作成（ruff, mypyを含む）
+# 開発用環境の作成（ruff, mypy, pre-commitを含む）
 conda env create -f environment-dev.yml
 
 # 環境のアクティベート
 conda activate anotherme_tts_dev
+
+# アプリケーションの依存関係をインストール（必要な場合）
+pip install -r requirements.txt
 ```
 
 > **NOTE**: 本番環境用には `environment.yml` を使用してください:
