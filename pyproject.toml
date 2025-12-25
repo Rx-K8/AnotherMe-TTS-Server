@@ -24,3 +24,8 @@ ignore = [
     "W191",  # インデントにタブが含まれる
     "B904",  # from eなしで例外を発生させることを許可(HTTPException用)
 ]
+
+[dependency-groups]
+dev = [
+    "types-aiofiles>=25.1.0.20251011",
+]
