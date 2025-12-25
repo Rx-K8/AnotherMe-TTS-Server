@@ -24,3 +24,6 @@ ignore = [
     "W191",  # インデントにタブが含まれる
     "B904",  # from eなしで例外を発生させることを許可(HTTPException用)
 ]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
