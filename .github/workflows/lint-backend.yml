@@ -49,7 +49,5 @@ jobs:
           environment-file: environment-dev.yml
           activate-environment: anotherme_tts_dev
           auto-activate-base: false
-          use-mamba: true
-          miniforge-version: latest
       - name: Run lint
         run: bash scripts/lint.sh
