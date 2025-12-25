@@ -9,8 +9,8 @@ class TTSRequest(BaseModel):
     """音声合成APIのリクエスト定義"""
 
     input: str = Field(..., description="音声合成するテキスト")
-    response_format: Literal["wav", "mp3", "pcm"] = Field(
-        default="pcm", description="応答する音声データのフォーマット"
+    response_format: Literal["wav", "mp3"] = Field(
+        default="wav", description="応答する音声データのフォーマット"
     )
     speed: float = Field(default=1.0, description="音声の再生速度")
 
