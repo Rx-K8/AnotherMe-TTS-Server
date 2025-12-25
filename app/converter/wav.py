@@ -31,9 +31,9 @@ class WAVConverter(AudioFormatConverter):
 
         wav_buffer = io.BytesIO()
         torchaudio.save(
-            wav_buffer,
-            audio_tensor,
-            sample_rate,
+            uri=wav_buffer,
+            src=audio_tensor,
+            sample_rate=sample_rate,
             format="wav",
             encoding="PCM_S",
             bits_per_sample=16,

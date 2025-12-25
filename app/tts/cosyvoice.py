@@ -6,7 +6,6 @@ from collections.abc import AsyncIterator
 
 import torch
 from cosyvoice.cli.cosyvoice import CosyVoice2
-from cosyvoice.utils.file_utils import load_wav
 
 from app.converter import AudioConverterFactory
 from app.schema import SynthesisParams
@@ -14,7 +13,6 @@ from app.tts.base import TTSProvider
 
 
 class CosyVoiceTTSProvider(TTSProvider):
-    # CosyVoice2のデフォルトサンプルレート
     SAMPLE_RATE = 22050
 
     def __init__(self, prompt_voice_path: str, prompt_text: str) -> None:
@@ -25,35 +23,43 @@ class CosyVoiceTTSProvider(TTSProvider):
             load_vllm=False,
             fp16=False,
         )
-        self.prompt_speech_text = prompt_text
-        self.prompt_speech_voice = load_wav(prompt_voice_path, 16000)
+        self.prompt_text = prompt_text
+        self.prompt_voice_path = prompt_voice_path
 
     def _generate_pcm(self, params: SynthesisParams) -> bytes:
         """音声を合成してPCMデータを生成する（内部メソッド）"""
-        audio_chunks = []
+        audio_tensors = []
         for output in self.cosyvoice.inference_zero_shot(
             params.text,
-            self.prompt_speech_text,
-            self.prompt_speech_voice,
+            self.prompt_text,
+            self.prompt_voice_path,
             speed=params.speed,
         ):
-            audio_chunks.append(output["tts_speech"])
+            audio_tensors.append(output["tts_speech"])
 
-        if audio_chunks:
-            audio = torch.cat(audio_chunks, dim=1)
-            pcm_data: bytes = (audio * 32767).to(torch.int16).numpy().tobytes()
-            return pcm_data
-
-        return b""
-
-    async def synthesize(self, params: SynthesisParams) -> bytes:
-        pcm_data = self._generate_pcm(params)
-
-        if not pcm_data:
+        if not audio_tensors:
             return b""
 
-        converter = AudioConverterFactory.get_converter(params.format)
-        return converter.convert(pcm_data, self.SAMPLE_RATE)
+        combined_audio_tensor = torch.cat(audio_tensors, dim=1)
+
+        audio_on_cpu = (
+            combined_audio_tensor.cpu()
+            if combined_audio_tensor.is_cuda
+            else combined_audio_tensor
+        )
+        audio_numpy = audio_on_cpu.numpy()
+
+        pcm_data: bytes = (audio_numpy * 32767).astype("int16").tobytes()
+        return pcm_data
+
+    async def synthesize(self, params: SynthesisParams) -> bytes:
+        pcm_audio_data = self._generate_pcm(params)
+
+        if not pcm_audio_data:
+            return b""
+
+        audio_converter = AudioConverterFactory.get_converter(params.format)
+        return audio_converter.convert(pcm_audio_data, self.SAMPLE_RATE)
 
     async def synthesize_stream(self, params: SynthesisParams) -> AsyncIterator[bytes]:
         raise NotImplementedError("Streaming synthesis is not yet implemented")

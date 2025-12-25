@@ -20,7 +20,6 @@ class MP3Converter(AudioFormatConverter):
         Args:
             bitrate: MP3のビットレート (例: "128k", "192k", "320k")
         """
-        # bitrateから数値を抽出 (例: "128k" -> 128000)
         self.bitrate = int(bitrate.lower().replace("k", "")) * 1000
 
     def convert(self, pcm_data: bytes, sample_rate: int, channels: int = 1) -> bytes:
@@ -41,7 +40,12 @@ class MP3Converter(AudioFormatConverter):
         audio_tensor = torch.from_numpy(audio_float).reshape(channels, -1)
 
         mp3_buffer = io.BytesIO()
-        torchaudio.save(mp3_buffer, audio_tensor, sample_rate, format="mp3")
+        torchaudio.save(
+            uri=mp3_buffer,
+            src=audio_tensor,
+            sample_rate=sample_rate,
+            format="mp3",
+        )
 
         mp3_buffer.seek(0)
         return mp3_buffer.getvalue()
