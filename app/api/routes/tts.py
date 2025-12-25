@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import Response
 
@@ -7,6 +9,7 @@ from app.schema import SynthesisParams
 from app.service import TTSService
 from app.utils import encode_audio_base64
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/tts", tags=["Text-to-Speech"])
 
 
@@ -51,11 +54,13 @@ async def synthesize_text(
             sample_rate=22050,
         )
     except ValueError as e:
+        logger.error(f"不正なリクエストパラメータ: {e}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e),
         )
     except Exception as e:
+        logger.exception(f"音声合成中にエラーが発生しました: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"音声合成中にエラーが発生しました: {str(e)}",
@@ -104,11 +109,13 @@ async def synthesize_text_raw(
             },
         )
     except ValueError as e:
+        logger.error(f"不正なリクエストパラメータ: {e}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e),
         )
     except Exception as e:
+        logger.exception(f"音声合成中にエラーが発生しました: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"音声合成中にエラーが発生しました: {str(e)}",
