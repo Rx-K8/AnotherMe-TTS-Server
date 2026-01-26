@@ -29,3 +29,17 @@ apt install sox libsox-dev
 mkdir -p pretrained_models
 git clone https://www.modelscope.cn/iic/CosyVoice2-0.5B.git pretrained_models/CosyVoice2-0.5B
 ```
+
+## Docker イメージのビルドと起動
+
+### Docker イメージのビルド
+
+```bash
+docker build -t nvidia-anotherme/tts-server:12.8.1-cudnn-runtime-ubuntu22.04 .
+```
+
+### Docker コンテナの起動
+
+```bash
+docker run --rm -p 8001:8001 --gpus '"device=1"' nvidia-anotherme/tts-server:12.8.1-cudnn-runtime-ubuntu22.04
+```
