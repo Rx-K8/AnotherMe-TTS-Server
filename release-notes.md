@@ -2,6 +2,10 @@
 
 ## Latest Changes
 
+### Docs
+
+* Main. PR [#8](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/8) by [@Rx-K8](https://github.com/Rx-K8).
+
 ## 0.1.0
 
 * feat: McCabeの複雑さ制限を追加. PR [#6](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/6) by [@Rx-K8](https://github.com/Rx-K8).
