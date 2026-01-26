@@ -1,12 +1,12 @@
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException, status
-
-from app.api.schema import TTSErrorResponse, TTSRequest, TTSResponse
 from app.dependencies import get_tts_service
 from app.schema import SynthesisParams
 from app.service import TTSService
 from app.utils import encode_audio_base64
+from fastapi import APIRouter, Depends, HTTPException, status
+
+from app.api.schema import TTSErrorResponse, TTSRequest, TTSResponse
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/tts", tags=["Text-to-Speech"])

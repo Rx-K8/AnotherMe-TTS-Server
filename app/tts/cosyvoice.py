@@ -5,11 +5,11 @@ sys.path.append("third_party/Matcha-TTS")
 from collections.abc import AsyncIterator
 
 import torch
+from app.schema import SynthesisParams
+from app.tts.base import TTSProvider
 from cosyvoice.cli.cosyvoice import CosyVoice2
 
 from app.converter import AudioConverterFactory
-from app.schema import SynthesisParams
-from app.tts.base import TTSProvider
 
 
 class CosyVoiceTTSProvider(TTSProvider):
