@@ -8,6 +8,7 @@
 
 ### Docs
 
+* feature: 新しいエージェントの設定ファイルを追加: コード検証、探索、実装レビュー、実装計画、テスト作成. PR [#12](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/12) by [@Rx-K8](https://github.com/Rx-K8).
 * 📝 docs: Claude Code用の設定ファイルを追加. PR [#11](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/11) by [@Rx-K8](https://github.com/Rx-K8).
 * Main. PR [#8](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/8) by [@Rx-K8](https://github.com/Rx-K8).
 
