@@ -12,6 +12,7 @@
 
 ### Refactors
 
+* ♻️ refactor: テストディレクトリ構成を整理. PR [#24](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/24) by [@Rx-K8](https://github.com/Rx-K8).
 * 🔧 refactor: CIワークフローにpathsフィルターを追加. PR [#22](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/22) by [@Rx-K8](https://github.com/Rx-K8).
 
 ### Docs
