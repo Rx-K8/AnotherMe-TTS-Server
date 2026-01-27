@@ -23,29 +23,15 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - name: Free Disk Space
-        run: |
-          echo "Before cleanup:"
-          df -h
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
-          sudo rm -rf /usr/local/.ghcup
-          sudo rm -rf /usr/share/swift
-          sudo docker image prune --all --force
-          sudo apt-get clean
-          echo "After cleanup:"
-          df -h
       - name: Checkout
         uses: actions/checkout@v5
-      - name: Setup Miniconda
-        uses: conda-incubator/setup-miniconda@v3
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
         with:
-          environment-file: environment-dev.yml
-          activate-environment: anotherme_tts_dev
-          auto-activate-base: false
+          enable-cache: true
+      - name: Set up Python
+        run: uv python install 3.10
+      - name: Install dependencies
+        run: uv sync --group dev
       - name: Run lint
-        run: bash scripts/lint.sh
+        run: uv run bash scripts/lint.sh
