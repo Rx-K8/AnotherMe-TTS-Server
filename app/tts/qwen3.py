@@ -22,7 +22,6 @@ class Qwen3TTSProvider:
     """
 
     def __init__(self) -> None:
-        """Voice Cloneプロバイダーを初期化"""
         self.model = Qwen3TTSModel.from_pretrained(
             "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
             device_map="cuda:0",
@@ -36,21 +35,7 @@ class Qwen3TTSProvider:
         ref_text: str,
         speed: float = 1.0,
     ) -> bytes:
-        """参照音声を動的に受け取ってVoice Clone合成を実行
-
-        アップロードされた参照音声からその場でVoice Cloneプロンプトを生成し、
-        指定されたテキストを音声合成する。
-
-        Args:
-            text: 合成するテキスト
-            ref_audio_bytes: 参照音声のバイト列
-            ref_text: 参照音声のテキスト書き起こし
-            speed: 再生速度（現在未使用）
-
-        Returns:
-            WAV形式の音声バイト列
-        """
-        # 一時ファイルに書き出してcreate_voice_clone_promptに渡す
+        # create_voice_clone_prompt APIがファイルパスを要求するため一時ファイルを使用
         tmp_path: str | None = None
         try:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
