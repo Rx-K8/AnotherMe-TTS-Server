@@ -3,13 +3,6 @@
 from pydantic import BaseModel, Field
 
 
-class TTSRequest(BaseModel):
-    """音声合成APIのリクエスト定義"""
-
-    input: str = Field(..., description="音声合成するテキスト")
-    speed: float = Field(default=1.0, description="音声の再生速度")
-
-
 class TTSResponse(BaseModel):
     """音声合成APIのレスポンス定義"""
 
