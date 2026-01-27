@@ -83,8 +83,9 @@ class MetadataRepository(Protocol):
         """メタデータを取得"""
         ...
 
-    async def list_metadata(self, audio_id: UUID) -> bool:
+    async def list_metadata(self) -> list[AudioMetadata]:
         """すべてのメタデータを取得"""
+        ...
 
     async def delete_metadata(self, audio_id: UUID) -> bool:
         """メタデータを削除"""

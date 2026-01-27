@@ -1,9 +1,12 @@
 from io import BytesIO
-from typing import BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, cast
 from uuid import UUID, uuid4
 
 from app.reference_audio.validator import AudioValidator
 from app.storage.base import AudioMetadata, AudioStorage
+
+if TYPE_CHECKING:
+    from app.storage.base import MetadataRepository
 
 
 class ReferenceAudioService:
@@ -42,6 +45,10 @@ class ReferenceAudioService:
             )
 
         audio_id = uuid4()
+        # validation_resultが有効な場合、sample_rateは必ず設定されている
+        if validation_result.sample_rate is None:
+            raise ValueError("サンプルレートを取得できませんでした")
+
         metadata = AudioMetadata(
             id=audio_id,
             filename=filename,
@@ -98,6 +105,7 @@ class ReferenceAudioService:
         """
         # ストレージがlist機能を持っている場合
         if hasattr(self.storage, "metadata_repo"):
-            return await self.storage.metadata_repo.list_metadata()
+            metadata_repo = cast("MetadataRepository", self.storage.metadata_repo)
+            return await metadata_repo.list_metadata()
 
         raise NotImplementedError("List operation not supported by this storage")

@@ -50,6 +50,7 @@ dev = [
     "mypy==1.19.1",
     "pre-commit>=4.5.1",
     "ruff==0.14.14",
+    "types-aiofiles>=25.1.0.20251011",
 ]
 
 [[tool.uv.index]]
@@ -77,6 +78,18 @@ tensorrt-cu12-libs = { index = "nvidia" }
 [tool.mypy]
 strict = true
 exclude = ["venv", ".venv", "third_party"]
+
+[[tool.mypy.overrides]]
+module = [
+    "pydub",
+    "pydub.*",
+    "torchaudio",
+    "torchaudio.*",
+    "cosyvoice",
+    "cosyvoice.*",
+]
+ignore_missing_imports = true
+follow_untyped_imports = false
 
 [tool.ruff]
 target-version = "py310"
