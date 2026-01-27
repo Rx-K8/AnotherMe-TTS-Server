@@ -10,6 +10,7 @@ on:
       - "tests/**/*.py"
       - "pyproject.toml"
       - "uv.lock"
+      - "scripts/lint.sh"
       - ".github/workflows/lint-backend.yml"
   pull_request:
     types:
@@ -20,6 +21,7 @@ on:
       - "tests/**/*.py"
       - "pyproject.toml"
       - "uv.lock"
+      - "scripts/lint.sh"
       - ".github/workflows/lint-backend.yml"
 
 jobs:
@@ -40,11 +42,5 @@ jobs:
       - name: Install dependencies
         run: uv sync --group dev
 
-      - name: Run linter
-        run: uv run ruff check app tests
-
-      - name: Run formatter check
-        run: uv run ruff format --check app tests
-
-      - name: Run type check
-        run: uv run mypy --strict app
+      - name: Run lint
+        run: uv run ./scripts/lint.sh
