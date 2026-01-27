@@ -4,6 +4,7 @@
 
 ### Features
 
+* ✨ feat: Voice CloneでMP3形式の参照音声をサポート. PR [#23](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/23) by [@Rx-K8](https://github.com/Rx-K8).
 * ✨ feat: GitHub issue作成用サブエージェントを追加. PR [#21](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/21) by [@Rx-K8](https://github.com/Rx-K8).
 * ✨ 音声確認用のデモUIページを追加. PR [#19](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/19) by [@Rx-K8](https://github.com/Rx-K8).
 * Voice Clone API実装 + テスト環境・CI/CD構築. PR [#13](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/13) by [@Rx-K8](https://github.com/Rx-K8).
