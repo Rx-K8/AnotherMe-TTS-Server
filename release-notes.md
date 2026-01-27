@@ -2,6 +2,14 @@
 
 ## Latest Changes
 
+### Features
+
+* feat: Migrate to uv and restructure application. PR [#9](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/9) by [@Rx-K8](https://github.com/Rx-K8).
+
+### Docs
+
+* Main. PR [#8](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/8) by [@Rx-K8](https://github.com/Rx-K8).
+
 ## 0.1.0
 
 * feat: McCabeの複雑さ制限を追加. PR [#6](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/6) by [@Rx-K8](https://github.com/Rx-K8).

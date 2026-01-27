@@ -1,9 +1,51 @@
+[project]
+name = "anotherme-tts-server"
+version = "0.1.0"
+description = "AnotherMe TTS Server with Qwen3-TTS"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "qwen-tts",
+    "fastapi==0.115.6",
+    "pydantic==2.7.0",
+    "uvicorn==0.30.0",
+    "torchaudio",
+    "soundfile==0.12.1",
+    "torch",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu124" }
+torchaudio = { index = "pytorch-cu124" }
+
+[dependency-groups]
+dev = [
+    "mypy==1.19.1",
+    "pre-commit>=4.5.1",
+    "ruff==0.14.14",
+]
+
 [tool.mypy]
 strict = true
 exclude = ["venv", ".venv", "third_party"]
 
+[[tool.mypy.overrides]]
+module = [
+    "torchaudio",
+    "torchaudio.*",
+    "qwen_tts",
+    "qwen_tts.*",
+]
+ignore_missing_imports = true
+follow_untyped_imports = false
+
 [tool.ruff]
-target-version = "py310"
+target-version = "py312"
 line-length = 88  # Blackのデフォルトと同じ
 
 [tool.ruff.lint]

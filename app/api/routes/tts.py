@@ -1,12 +1,12 @@
 import logging
 
+from fastapi import APIRouter, Depends, HTTPException, status
+
+from app.api.schema import TTSErrorResponse, TTSRequest, TTSResponse
 from app.dependencies import get_tts_service
 from app.schema import SynthesisParams
 from app.service import TTSService
 from app.utils import encode_audio_base64
-from fastapi import APIRouter, Depends, HTTPException, status
-
-from app.api.schema import TTSErrorResponse, TTSRequest, TTSResponse
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/tts", tags=["Text-to-Speech"])
@@ -16,7 +16,6 @@ def _convert_request(request: TTSRequest) -> SynthesisParams:
     """TTSリクエストを内部パラメータに変換"""
     return SynthesisParams(
         text=request.input,
-        format=request.response_format,
         speed=request.speed,
     )
 
@@ -39,7 +38,6 @@ async def synthesize_text(
     テキストを音声に合成するエンドポイント
 
     - input: 音声合成するテキスト
-    - response_format: 出力フォーマット (wav, mp3)
     - speed: 再生速度 (デフォルト: 1.0)
     """
     try:
@@ -47,11 +45,7 @@ async def synthesize_text(
         audio_data = await tts_service.synthesize(params)
         encoded_audio = encode_audio_base64(audio_data)
 
-        return TTSResponse(
-            audio_data=encoded_audio,
-            format=request.response_format,
-            sample_rate=22050,
-        )
+        return TTSResponse(audio_data=encoded_audio)
     except ValueError as e:
         logger.error(f"不正なリクエストパラメータ: {e}")
         raise HTTPException(

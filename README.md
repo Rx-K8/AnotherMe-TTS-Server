@@ -1,34 +1,33 @@
 ## インストール
 
-### サブモジュールの初期化
+### uv環境のセットアップ
 
 ```bash
-git submodule update --init
-```
+# uvのインストール（未インストールの場合）
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-### Conda環境のセットアップ
-
-```bash
 # 本番環境
-conda env create -f environment.yml
+uv sync
 
 # 開発環境
-conda env create -f environment_dev.yml
+uv sync --group dev
 ```
 
-### Linuxでの追加設定
+### FlashAttention 2のインストール（推奨）
+
+GPUメモリ使用量を削減するため、FlashAttention 2のインストールを推奨します。
 
 ```bash
-# ubuntuの場合
-apt install sox libsox-dev
+uv pip install flash-attn --no-build-isolation
 ```
 
-## 音声モデルのダウンロード
+## サーバーの起動
 
 ```bash
-mkdir -p pretrained_models
-git clone https://www.modelscope.cn/iic/CosyVoice2-0.5B.git pretrained_models/CosyVoice2-0.5B
+uv run uvicorn app.main:app --host 0.0.0.0 --port 8001
 ```
+
+初回起動時にHugging Faceから`Qwen/Qwen3-TTS-12Hz-1.7B-Base`モデルがダウンロードされます（約3.4GB）。
 
 ## Docker イメージのビルドと起動
 
