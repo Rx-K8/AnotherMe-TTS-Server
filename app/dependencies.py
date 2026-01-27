@@ -2,11 +2,11 @@
 
 from app.service import TTSService
 from app.tts.base import TTSProvider
-from app.tts.cosyvoice import CosyVoiceTTSProvider
+from app.tts.qwen3 import Qwen3TTSProvider
 
-# プロンプト設定
-PROMPT_VOICE_PATH = "assets/ondokusan.mp3"
-PROMPT_TEXT = "ここに読み上げたいテキストを貼り付けて下さい。"
+# 参照音声設定（ボイスクローン用）
+REF_AUDIO_PATH = "assets/ondokusan.mp3"
+REF_TEXT = "ここに読み上げたいテキストを貼り付けて下さい。"
 
 
 class TTSDependencies:
@@ -23,9 +23,9 @@ class TTSDependencies:
     def get_tts_provider(cls) -> TTSProvider:
         """TTSProviderのシングルトンインスタンスを取得"""
         if cls._tts_provider is None:
-            cls._tts_provider = CosyVoiceTTSProvider(
-                prompt_voice_path=PROMPT_VOICE_PATH,
-                prompt_text=PROMPT_TEXT,
+            cls._tts_provider = Qwen3TTSProvider(
+                ref_audio_path=REF_AUDIO_PATH,
+                ref_text=REF_TEXT,
             )
         return cls._tts_provider
 
@@ -39,9 +39,9 @@ class TTSDependencies:
     @classmethod
     def initialize(cls) -> None:
         """依存性を初期化"""
-        cls._tts_provider = CosyVoiceTTSProvider(
-            prompt_voice_path=PROMPT_VOICE_PATH,
-            prompt_text=PROMPT_TEXT,
+        cls._tts_provider = Qwen3TTSProvider(
+            ref_audio_path=REF_AUDIO_PATH,
+            ref_text=REF_TEXT,
         )
 
     @classmethod

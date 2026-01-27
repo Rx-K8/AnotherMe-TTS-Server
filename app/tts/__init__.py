@@ -1,6 +1,6 @@
 """TTS プロバイダーモジュール"""
 
 from app.tts.base import TTSProvider
-from app.tts.cosyvoice import CosyVoiceTTSProvider
+from app.tts.qwen3 import Qwen3TTSProvider
 
-__all__ = ["TTSProvider", "CosyVoiceTTSProvider"]
+__all__ = ["TTSProvider", "Qwen3TTSProvider"]
