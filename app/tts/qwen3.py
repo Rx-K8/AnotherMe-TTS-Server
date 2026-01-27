@@ -5,17 +5,15 @@ https://github.com/QwenLM/Qwen3-TTS
 """
 
 import io
-from typing import Any
+import os
+import tempfile
 
 import soundfile as sf  # type: ignore[import-untyped]
 import torch
 from qwen_tts import Qwen3TTSModel
 
-from app.schema import SynthesisParams
-from app.tts.base import TTSProvider
 
-
-class Qwen3TTSProvider(TTSProvider):
+class Qwen3TTSProvider:
     """Qwen3-TTS Voice Clone プロバイダー
 
     Qwen3-TTS-12Hz-1.7B-Base モデルを使用したVoice Clone専用の音声合成。
@@ -23,35 +21,43 @@ class Qwen3TTSProvider(TTSProvider):
     任意のテキストをその声で合成する。
     """
 
-    def __init__(self, ref_audio_path: str, ref_text: str) -> None:
-        """Voice Cloneプロバイダーを初期化
-
-        Args:
-            ref_audio_path: 参照音声ファイルのパス（3秒程度推奨）
-            ref_text: 参照音声のテキスト書き起こし
-        """
+    def __init__(self) -> None:
         self.model = Qwen3TTSModel.from_pretrained(
             "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
             device_map="cuda:0",
             dtype=torch.bfloat16,
         )
 
-        # Voice Cloneプロンプトをキャッシュ（毎回再計算を回避）
-        self._voice_clone_prompt: Any = self.model.create_voice_clone_prompt(
-            ref_audio=ref_audio_path,
-            ref_text=ref_text,
-        )
+    async def synthesize_with_reference(
+        self,
+        text: str,
+        ref_audio_bytes: bytes,
+        ref_text: str,
+        speed: float = 1.0,
+    ) -> bytes:
+        # create_voice_clone_prompt APIがファイルパスを要求するため一時ファイルを使用
+        tmp_path: str | None = None
+        try:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                tmp.write(ref_audio_bytes)
+                tmp_path = tmp.name
 
-    async def synthesize(self, params: SynthesisParams) -> bytes:
-        """テキストを音声に合成してWAVバイト列を返す"""
-        wavs, sr = self.model.generate_voice_clone(
-            text=params.text,
-            language="Japanese",
-            voice_clone_prompt=self._voice_clone_prompt,
-        )
+            voice_clone_prompt = self.model.create_voice_clone_prompt(
+                ref_audio=tmp_path,
+                ref_text=ref_text,
+            )
 
-        audio_data = wavs[0] if isinstance(wavs, list) else wavs
+            wavs, sr = self.model.generate_voice_clone(
+                text=text,
+                language="Japanese",
+                voice_clone_prompt=voice_clone_prompt,
+            )
 
-        buffer = io.BytesIO()
-        sf.write(buffer, audio_data, sr, format="WAV")
-        return buffer.getvalue()
+            audio_data = wavs[0] if isinstance(wavs, list) else wavs
+
+            buffer = io.BytesIO()
+            sf.write(buffer, audio_data, sr, format="WAV")
+            return buffer.getvalue()
+        finally:
+            if tmp_path is not None:
+                os.unlink(tmp_path)

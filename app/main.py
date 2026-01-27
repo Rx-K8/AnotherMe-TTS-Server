@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.main import api_router
-from app.dependencies import TTSDependencies
+from app.tts.qwen3 import Qwen3TTSProvider
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,17 +19,15 @@ logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
-async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """アプリケーション起動時の初期化処理"""
-    logger.info("依存関係の初期化を開始します...")
-    TTSDependencies.initialize()
-    logger.info("依存関係の初期化が完了しました")
+    logger.info("TTSプロバイダーの初期化を開始します...")
+    app.state.tts_provider = Qwen3TTSProvider()
+    logger.info("TTSプロバイダーの初期化が完了しました")
 
     yield
 
-    logger.info("依存関係をリセットします...")
-    TTSDependencies.reset()
-    logger.info("依存関係のリセットが完了しました。")
+    logger.info("シャットダウン処理が完了しました")
 
 
 def create_app() -> FastAPI:
