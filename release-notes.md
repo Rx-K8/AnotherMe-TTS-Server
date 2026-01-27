@@ -15,6 +15,7 @@
 
 ### Internal
 
+* 📝 バグ報告・機能リクエストのIssueテンプレートを追加. PR [#15](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/15) by [@Rx-K8](https://github.com/Rx-K8).
 * 📝 Issue/Discussion テンプレートを追加. PR [#14](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/14) by [@Rx-K8](https://github.com/Rx-K8).
 
 ## 0.1.0
