@@ -9,6 +9,10 @@
 * Voice Clone API実装 + テスト環境・CI/CD構築. PR [#13](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/13) by [@Rx-K8](https://github.com/Rx-K8).
 * feat: Migrate to uv and restructure application. PR [#9](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/9) by [@Rx-K8](https://github.com/Rx-K8).
 
+### Refactors
+
+* 🔧 refactor: CIワークフローにpathsフィルターを追加. PR [#22](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/22) by [@Rx-K8](https://github.com/Rx-K8).
+
 ### Docs
 
 * feature: 新しいエージェントの設定ファイルを追加: コード検証、探索、実装レビュー、実装計画、テスト作成. PR [#12](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/12) by [@Rx-K8](https://github.com/Rx-K8).
