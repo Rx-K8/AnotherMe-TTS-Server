@@ -13,7 +13,7 @@ import torch
 from qwen_tts import Qwen3TTSModel
 
 
-class Qwen3TTSProvider:
+class Qwen3TTSProvider:  # pragma: no cover
     """Qwen3-TTS Voice Clone プロバイダー
 
     Qwen3-TTS-12Hz-1.7B-Base モデルを使用したVoice Clone専用の音声合成。

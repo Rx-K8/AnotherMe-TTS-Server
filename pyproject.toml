@@ -89,6 +89,7 @@ dynamic_context = "test_function"
 [tool.coverage.report]
 show_missing = true
 sort = "-Cover"
+omit = ["app/main.py"]  # GPU依存のエントリポイント
 
 [tool.coverage.html]
 show_contexts = true
