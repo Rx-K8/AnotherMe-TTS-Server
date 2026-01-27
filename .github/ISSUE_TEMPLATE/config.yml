@@ -1,0 +1,20 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 質問・ヘルプ / Question / Help
+    url: https://github.com/Rx-K8/AnotherMe-TTS-Server/discussions
+    about: |
+      質問やヘルプが必要な場合は、GitHub Discussions をご利用ください。
+      For questions or help, please use GitHub Discussions.
+
+  - name: 機能リクエスト / Feature Request
+    url: https://github.com/Rx-K8/AnotherMe-TTS-Server/discussions/categories/ideas
+    about: |
+      新機能の提案は、まず Discussions で議論してください。
+      For feature requests, please start a discussion first.
+
+  - name: バグ報告 / Bug Report
+    url: https://github.com/Rx-K8/AnotherMe-TTS-Server/discussions/categories/q-a
+    about: |
+      バグ報告は、まず Discussions で状況を共有してください。
+      For bug reports, please describe the issue in Discussions first.
