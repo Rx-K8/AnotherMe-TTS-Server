@@ -4,6 +4,7 @@
 
 ### Features
 
+* Voice Clone API実装 + テスト環境・CI/CD構築. PR [#13](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/13) by [@Rx-K8](https://github.com/Rx-K8).
 * feat: Migrate to uv and restructure application. PR [#9](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/9) by [@Rx-K8](https://github.com/Rx-K8).
 
 ### Docs
