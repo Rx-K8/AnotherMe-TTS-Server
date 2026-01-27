@@ -5,10 +5,22 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - "app/**/*.py"
+      - "tests/**/*.py"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/test.yml"
   pull_request:
     types:
       - opened
       - synchronize
+    paths:
+      - "app/**/*.py"
+      - "tests/**/*.py"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/test.yml"
 
 jobs:
   test:
