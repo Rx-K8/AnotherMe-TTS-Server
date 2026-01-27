@@ -1,14 +1,11 @@
 import logging
-from pathlib import Path
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile, status
 
 from app.api.schema import TTSErrorResponse, TTSResponse
 from app.tts.qwen3 import Qwen3TTSProvider
 from app.utils import encode_audio_base64
-
-MAX_AUDIO_SIZE_BYTES = 10 * 1024 * 1024  # 10MB
-ALLOWED_EXTENSIONS = {".wav", ".mp3"}
+from app.validators import validate_audio_file
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/tts", tags=["Text-to-Speech"])
@@ -16,38 +13,6 @@ router = APIRouter(prefix="/tts", tags=["Text-to-Speech"])
 
 def _get_tts_provider(request: Request) -> Qwen3TTSProvider:
     return request.app.state.tts_provider  # type: ignore[no-any-return]
-
-
-async def _validate_audio_file(audio_file: UploadFile) -> tuple[bytes, str]:
-    """音声ファイルを検証し、内容と拡張子を返す。
-
-    Args:
-        audio_file: アップロードされた音声ファイル
-
-    Returns:
-        tuple[bytes, str]: (ファイル内容, 拡張子)
-
-    Raises:
-        HTTPException: ファイル形式が不正またはサイズ超過の場合
-    """
-    filename = audio_file.filename or ""
-    ext = Path(filename).suffix.lower()
-
-    if ext not in ALLOWED_EXTENSIONS:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"対応している音声形式は{', '.join(sorted(ALLOWED_EXTENSIONS))}です",
-        )
-
-    content = await audio_file.read()
-
-    if len(content) > MAX_AUDIO_SIZE_BYTES:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="ファイルサイズが上限（10MB）を超えています",
-        )
-
-    return content, ext
 
 
 @router.post(
@@ -69,7 +34,7 @@ async def synthesize_voice_clone(
 ) -> TTSResponse:
     try:
         tts_provider = _get_tts_provider(request)
-        audio_bytes, audio_ext = await _validate_audio_file(audio_file)
+        audio_bytes, audio_ext = await validate_audio_file(audio_file)
         audio_data = await tts_provider.synthesize_with_reference(
             text=input,
             ref_audio_bytes=audio_bytes,
