@@ -2,6 +2,10 @@
 
 ## Latest Changes
 
+### Features
+
+* feat: Migrate to uv and restructure application. PR [#9](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/9) by [@Rx-K8](https://github.com/Rx-K8).
+
 ### Docs
 
 * Main. PR [#8](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/8) by [@Rx-K8](https://github.com/Rx-K8).
