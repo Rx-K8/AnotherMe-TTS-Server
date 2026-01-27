@@ -36,9 +36,10 @@ class TestVoiceCloneEndpoint:
         call_kwargs = mock_tts_provider.synthesize_with_reference.call_args.kwargs
         assert call_kwargs["speed"] == 1.5
 
-    async def test_voice_clone_rejects_non_wav_file(
+    async def test_voice_clone_accepts_mp3_file(
         self,
         client: AsyncClient,
+        mock_tts_provider: MagicMock,
         sample_wav_content: bytes,
     ) -> None:
         response = await client.post(
@@ -46,8 +47,23 @@ class TestVoiceCloneEndpoint:
             files={"audio_file": ("test.mp3", sample_wav_content, "audio/mpeg")},
             data={"input": "テスト", "ref_text": "参照"},
         )
+        assert response.status_code == 200
+        call_kwargs = mock_tts_provider.synthesize_with_reference.call_args.kwargs
+        assert call_kwargs["ref_audio_ext"] == ".mp3"
+
+    async def test_voice_clone_rejects_unsupported_format(
+        self,
+        client: AsyncClient,
+        sample_wav_content: bytes,
+    ) -> None:
+        response = await client.post(
+            "/api/tts/voice-clone",
+            files={"audio_file": ("test.ogg", sample_wav_content, "audio/ogg")},
+            data={"input": "テスト", "ref_text": "参照"},
+        )
         assert response.status_code == 400
-        assert "WAVのみ" in response.json()["detail"]
+        assert ".mp3" in response.json()["detail"]
+        assert ".wav" in response.json()["detail"]
 
     async def test_voice_clone_rejects_large_file(
         self,

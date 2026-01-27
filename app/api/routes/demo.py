@@ -140,8 +140,8 @@ DEMO_HTML = """
 
     <form id="ttsForm">
         <div class="form-group">
-            <label for="audioFile">参照音声ファイル (WAV)</label>
-            <input type="file" id="audioFile" accept=".wav" required>
+            <label for="audioFile">参照音声ファイル (WAV/MP3)</label>
+            <input type="file" id="audioFile" accept=".wav,.mp3" required>
         </div>
 
         <div class="form-group">

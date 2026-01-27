@@ -32,13 +32,14 @@ class Qwen3TTSProvider:
         self,
         text: str,
         ref_audio_bytes: bytes,
+        ref_audio_ext: str,
         ref_text: str,
         speed: float = 1.0,
     ) -> bytes:
         # create_voice_clone_prompt APIがファイルパスを要求するため一時ファイルを使用
         tmp_path: str | None = None
         try:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=ref_audio_ext) as tmp:
                 tmp.write(ref_audio_bytes)
                 tmp_path = tmp.name
 
