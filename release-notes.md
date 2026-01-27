@@ -8,6 +8,7 @@
 
 ### Docs
 
+* 📝 docs: Claude Code用の設定ファイルを追加. PR [#11](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/11) by [@Rx-K8](https://github.com/Rx-K8).
 * Main. PR [#8](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/8) by [@Rx-K8](https://github.com/Rx-K8).
 
 ## 0.1.0
