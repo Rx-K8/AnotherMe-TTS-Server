@@ -2,7 +2,7 @@
 
 [![Test](https://github.com/Rx-K8/AnotherMe-TTS-Server/workflows/Test/badge.svg)](https://github.com/Rx-K8/AnotherMe-TTS-Server/actions?query=workflow%3ATest)
 [![Lint](https://github.com/Rx-K8/AnotherMe-TTS-Server/workflows/Lint/badge.svg)](https://github.com/Rx-K8/AnotherMe-TTS-Server/actions?query=workflow%3ALint)
-[![Coverage](https://coverage-badge.samuelcolvin.workers.dev/Rx-K8/AnotherMe-TTS-Server.svg)](https://coverage-badge.samuelcolvin.workers.dev/redirect/Rx-K8/AnotherMe-TTS-Server)
+[![Coverage](.github/badges/coverage-badge.svg)](https://github.com/Rx-K8/AnotherMe-TTS-Server/actions?query=workflow%3ATest)
 
 ## インストール
 
