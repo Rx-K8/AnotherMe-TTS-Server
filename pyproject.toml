@@ -12,6 +12,7 @@ dependencies = [
     "torchaudio",
     "soundfile==0.12.1",
     "torch",
+    "pydantic-settings>=2.12.0",
 ]
 
 [[tool.uv.index]]
@@ -73,6 +74,9 @@ ignore = [
     "W191",  # インデントにタブが含まれる
     "B904",  # from eなしで例外を発生させることを許可(HTTPException用)
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"app/api/routes/demo.py" = ["E501"]  # HTMLテンプレートの行長を許容
 
 [tool.ruff.lint.mccabe]
 max-complexity = 10
