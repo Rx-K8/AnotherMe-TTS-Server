@@ -11,6 +11,10 @@
 * Voice Clone API実装 + テスト環境・CI/CD構築. PR [#13](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/13) by [@Rx-K8](https://github.com/Rx-K8).
 * feat: Migrate to uv and restructure application. PR [#9](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/9) by [@Rx-K8](https://github.com/Rx-K8).
 
+### Fixes
+
+* 🐛 fix: Smokeshowワークフローの権限を修正. PR [#28](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/28) by [@Rx-K8](https://github.com/Rx-K8).
+
 ### Refactors
 
 * ♻️ refactor: テストディレクトリ構成を整理. PR [#24](https://github.com/Rx-K8/AnotherMe-TTS-Server/pull/24) by [@Rx-K8](https://github.com/Rx-K8).
